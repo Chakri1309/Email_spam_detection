@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email Spam Detector</title>
+  <style>
+    .credentials-box {
+      width: 350px;
+      margin: 100px auto;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: Arial, sans-serif;
+      background: linear-gradient(skyblue, white);
+    }
+    .credentials-box input, .credentials-box textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+    .credentials-box button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      height: 40px;
+    }
+    .credentials-box button:hover {
+      background-color: #218838;
+      transform: scale(1.05);
+    }
+    body {
+      background: linear-gradient(to bottom, skyblue, white, lavender);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+  </style>
+</head>
+<body
+  {% if prediction_text == '⚠️Spam mail' %}
+    style="background: linear-gradient(to bottom, red, white, lavender);background-attachment: fixed;background-size: cover;background-repeat: no-repeat;"
+  {% elif prediction_text == '✅Ham mail' %}
+    style="background: linear-gradient(to bottom, #4CAF50, white, lavender);background-attachment: fixed;background-size: cover;background-repeat: no-repeat;"
+  {% endif %}
+>
+ 
+
+  <div class="credentials-box">
+    <h2>Email Spam Detector</h2>
+
+    <!-- Form that posts to Flask backend -->
+    <form action="/predict" method="POST">
+      <textarea name="message" placeholder="Enter the mail content..." required></textarea>
+      <button type="submit">Check</button>
+    </form>
+
+    <!-- Prediction result from Flask -->
+    {% if prediction_text %}
+    <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+  </div>
+
+</body>
+</html>
